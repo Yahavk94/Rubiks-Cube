@@ -1,0 +1,6 @@
+[O,B,B],[O,W,Y],[G,G,Y]
+[Y,G,B],[Y,G,W],[G,O,W]
+[B,Y,G],[B,Y,G],[B,R,O]
+[W,W,G],[W,B,G],[W,B,R]
+[R,R,W],[R,R,W],[R,R,R]
+[O,B,Y],[O,O,Y],[O,O,Y]
