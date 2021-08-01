@@ -4,7 +4,7 @@ FLAGS = -Wall -g
 run: Rubiks
 
 Rubiks: Main.o Solver.o Initial.o Idastar.o Services.o Rotations.o Heuristic.o
-	$(CC) $(FLAGS) Main.o Solver.o Initial.o Idastar.o Services.o Rotations.o Heuristic.o -o Rubiks
+	$(CC) $(FLAGS) -o Rubiks Main.o Solver.o Initial.o Idastar.o Services.o Rotations.o Heuristic.o
 
 Solver.o: Dimension.h Operator.h Node.h
 	$(CC) $(FLAGS) -c Solver.c
