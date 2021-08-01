@@ -62,7 +62,7 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
             case Bi:
                 redundant = (op == B || op == B2 || op == Bi) || (op == F || op == F2 || op == Fi);
                 break;
-        
+
             default: // node_to_expand is the root
                 redundant = false;
                 break;
@@ -88,23 +88,23 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         case L:
             rotate_left_face(new_node->state, true);
             break;
-        
+
         case Li:
             rotate_left_face(new_node->state, false);
             break;
-        
+
         case U:
             rotate_top_face(new_node->state, true);
             break;
-        
+
         case Ui:
             rotate_top_face(new_node->state, false);
             break;
-        
+
         case F:
             rotate_front_face(new_node->state, true);
             break;
-        
+
         case Fi:
             rotate_front_face(new_node->state, false);
             break;
@@ -112,15 +112,15 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         case R:
             rotate_right_face(new_node->state, true);
             break;
-        
+
         case Ri:
             rotate_right_face(new_node->state, false);
             break;
-        
+
         case D:
             rotate_bottom_face(new_node->state, true);
             break;
-        
+
         case Di:
             rotate_bottom_face(new_node->state, false);
             break;
@@ -128,11 +128,11 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         case B:
             rotate_back_face(new_node->state, true);
             break;
-        
+
         case Bi:
             rotate_back_face(new_node->state, false);
             break;
-        
+
         case L2:
             rotate_L2(new_node->state);
             break;
@@ -140,24 +140,24 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         case U2:
             rotate_U2(new_node->state);
             break;
-        
+
         case F2:
             rotate_F2(new_node->state);
             break;
-        
+
         case R2:
             rotate_R2(new_node->state);
             break;
-        
+
         case D2:
             rotate_D2(new_node->state);
             break;
-        
+
         case B2:
             rotate_B2(new_node->state);
             break;
 
-        default:
+        default: // should never reach here
             perror("INVALID OPERATOR");
             hdestroy();
             free_branch_and_terminate(new_node);
