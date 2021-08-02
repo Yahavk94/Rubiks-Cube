@@ -58,6 +58,11 @@ void run() {
     FILE *fp = fopen(output_file_name, "w");
     if (fp == NULL) {
         perror(output_file_name);
+        if (result == NULL) {
+            free(initial_node);
+            exit(EXIT_FAILURE);
+        }
+
         free_branch_and_terminate(result);
     }
 
