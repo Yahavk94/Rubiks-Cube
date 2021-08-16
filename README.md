@@ -3,7 +3,7 @@ Rubik's Cube is a 3D puzzle with six faces covered by a square number of sticker
 For the cube to be solved, each face must be returned to have only one color.
 
 ## Description
-Assuming all faces are the same size and contain 9 stickers, this project uses Iterative Deepening A* algorithm to find a sequence of primitive steps, with a **minimal cost of moves** that will lead us from the initial node to the goal node.
+Assuming all faces are the same size and contain 9 stickers, this project uses Iterative Deepening A* algorithm to find a sequence of primitive steps, with a **minimal cost of moves** that will lead us from the initial state to the goal state.
 
 ## Installation
 - Clone this repository.
@@ -26,7 +26,7 @@ make
 ```
 
 ## Improvements
-Since the number of possible nodes is enormous, Iterative Deepening A* algorithm yields the optimal solution path for any node that is not too far from the goal, within a reasonable amount of time. Although this code is far from perfect, it is a step in the right direction.
+Since the number of possible states is enormous, Iterative Deepening A* algorithm yields the optimal solution path for any state that is not too far from the goal, within a reasonable amount of time. Although this code is far from perfect, it is a step in the right direction.
 
 ## References
 - R. E. Korf, "Finding Optimal Solutions to Rubik's Cube Using Pattern Databases", American Association for Artificial Intelligence (AAAI), pp. 700-705, 1997.
