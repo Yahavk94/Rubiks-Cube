@@ -12,20 +12,20 @@
  */
 static size_t char_to_index(const char ch) {
     switch (ch) {
-        case 'W':
-            return 0;
-        case 'G':
-            return 1;
-        case 'Y':
-            return 2;
-        case 'B':
-            return 3;
-        case 'R':
-            return 4;
-        case 'O':
-            return 5;
-        default:
-            return ERROR;
+    case 'W':
+        return 0;
+    case 'G':
+        return 1;
+    case 'Y':
+        return 2;
+    case 'B':
+        return 3;
+    case 'R':
+        return 4;
+    case 'O':
+        return 5;
+    default:
+        return ERROR;
     }
 }
 
