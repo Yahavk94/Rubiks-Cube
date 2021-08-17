@@ -66,7 +66,7 @@ void run() {
         free_branch_and_terminate(result);
     }
 
-    if (result == initial_node || result == NULL) {
+    if (result == NULL) {
         fprintf(fp, "NO PATH\n");
     } else {
         char *sequence_of_operators[MAX_LENGTH];
