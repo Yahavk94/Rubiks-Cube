@@ -68,7 +68,7 @@ void run() {
 
     if (result == NULL) {
         fprintf(fp, "NO PATH\n");
-    } else {
+    } else if (result != initial_node) {
         char *sequence_of_operators[MAX_LENGTH];
         size_t i = 0;
 
