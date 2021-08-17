@@ -158,7 +158,7 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         break;
 
     default: // should never reach here
-        perror("INVALID OPERATOR");
+        puts("INVALID OPERATOR");
         hdestroy();
         free_branch_and_terminate(new_node);
     }
