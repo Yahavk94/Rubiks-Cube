@@ -11,7 +11,7 @@ static inline size_t get_sticker(const enum Face f, const size_t r, const size_t
     return FACE_SIZE * f + N * r + c;
 }
 
-static void swap(char *const state, const size_t a, const size_t b, const size_t c, const size_t d) {
+static inline void swap(char *const state, const size_t a, const size_t b, const size_t c, const size_t d) {
     const char temp = state[a];
     state[a] = state[b];
     state[b] = state[c];
