@@ -7,7 +7,7 @@
 /**
  * This function returns the corresponding sticker in the cube.
  */
-static size_t get_sticker(const enum Face f, const size_t r, const size_t c) {
+static inline size_t get_sticker(const enum Face f, const size_t r, const size_t c) {
     return FACE_SIZE * f + N * r + c;
 }
 
