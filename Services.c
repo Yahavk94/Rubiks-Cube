@@ -23,54 +23,46 @@ bool is_goal(const char *const state) {
     return true;
 }
 
+static bool is_redundant(const enum Operator node_to_expand_operator, const enum Operator op) {
+    switch (node_to_expand_operator) /* according to Korf's paper (see references) */ {
+    case L:
+    case L2:
+    case Li:
+        return op == L || op == L2 || op == Li;
+
+    case U:
+    case U2:
+    case Ui:
+        return op == U || op == U2 || op == Ui;
+
+    case F:
+    case F2:
+    case Fi:
+        return op == F || op == F2 || op == Fi;
+
+    case R:
+    case R2:
+    case Ri:
+        return (op == R || op == R2 || op == Ri) || (op == L || op == L2 || op == Li);
+
+    case D:
+    case D2:
+    case Di:
+        return (op == D || op == D2 || op == Di) || (op == U || op == U2 || op == Ui);
+
+    case B:
+    case B2:
+    case Bi:
+        return (op == B || op == B2 || op == Bi) || (op == F || op == F2 || op == Fi);
+
+    default: // node_to_expand is the root
+        return false;
+    }
+}
+
 struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
-    /* avoid redundant steps */ {
-        bool redundant;
-        switch (node_to_expand->operator) /* according to Korf's paper (see references) */ {
-        case L:
-        case L2:
-        case Li:
-            redundant = op == L || op == L2 || op == Li;
-            break;
-
-        case U:
-        case U2:
-        case Ui:
-            redundant = op == U || op == U2 || op == Ui;
-            break;
-
-        case F:
-        case F2:
-        case Fi:
-            redundant = op == F || op == F2 || op == Fi;
-            break;
-
-        case R:
-        case R2:
-        case Ri:
-            redundant = (op == R || op == R2 || op == Ri) || (op == L || op == L2 || op == Li);
-            break;
-
-        case D:
-        case D2:
-        case Di:
-            redundant = (op == D || op == D2 || op == Di) || (op == U || op == U2 || op == Ui);
-            break;
-
-        case B:
-        case B2:
-        case Bi:
-            redundant = (op == B || op == B2 || op == Bi) || (op == F || op == F2 || op == Fi);
-            break;
-
-        default: // node_to_expand is the root
-            redundant = false;
-            break;
-        }
-
-        if (redundant) {
-            return NULL;
-        }
+    if (is_redundant(node_to_expand->operator, op)) /* avoid redundant expansions */ {
+        return NULL;
     }
 
     struct Node *const new_node = malloc(sizeof(struct Node));
