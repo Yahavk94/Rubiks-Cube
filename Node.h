@@ -1,5 +1,5 @@
 /**
- * This struct represents a node.
+ * This struct represents a node in the search graph.
  * DO NOT MODIFY THIS FILE!
  * @author Yahav Karpel
  */
