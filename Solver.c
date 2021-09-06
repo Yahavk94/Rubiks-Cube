@@ -9,16 +9,16 @@
 
 static char *operator_to_str[] = {
     "L",
-    "Li",
     "U",
-    "Ui",
     "F",
-    "Fi",
     "R",
-    "Ri",
     "D",
-    "Di",
     "B",
+    "Li",
+    "Ui",
+    "Fi",
+    "Ri",
+    "Di",
     "Bi",
     "L2",
     "U2",
@@ -29,14 +29,14 @@ static char *operator_to_str[] = {
 };
 
 struct Node *init_from_file();
-struct Node *ida_star(struct Node *const initial_node);
+struct Node *ida_star(struct Node *initial_node);
 
 /**
  * This function frees up the current branch and terminates the program.
  */
 void free_branch_and_terminate(struct Node *deepest_node) {
     while (deepest_node != NULL) {
-        struct Node *const to_free = deepest_node;
+        struct Node *to_free = deepest_node;
         deepest_node = deepest_node->parent;
         free(to_free);
     }
@@ -50,7 +50,7 @@ void free_branch_and_terminate(struct Node *deepest_node) {
 void run() {
     clock_t start = clock();
 
-    struct Node *const initial_node = init_from_file();
+    struct Node *initial_node = init_from_file();
     struct Node *result = ida_star(initial_node);
     puts("SEARCH COMPLETED!");
 
@@ -72,12 +72,12 @@ void run() {
         char *sequence_of_operators[MAX_LENGTH];
         size_t i = 0;
 
-        while (result != initial_node) {
+        do {
             sequence_of_operators[i++] = operator_to_str[result->operator];
-            struct Node *const to_free = result;
+            struct Node *to_free = result;
             result = result->parent;
             free(to_free);
-        }
+        } while (result != initial_node);
 
         while (i > 1) {
             fprintf(fp, "%s-", sequence_of_operators[--i]);

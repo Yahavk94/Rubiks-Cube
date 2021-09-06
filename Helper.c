@@ -8,34 +8,34 @@
 bool is_redundant(const enum Operator node_to_expand_operator, const enum Operator op) {
     switch (node_to_expand_operator) /* according to Korf's paper (see references) */ {
     case L:
-    case L2:
     case Li:
-        return op == L || op == L2 || op == Li;
+    case L2:
+        return op == L || op == Li || op == L2;
 
     case U:
-    case U2:
     case Ui:
-        return op == U || op == U2 || op == Ui;
+    case U2:
+        return op == U || op == Ui || op == U2;
 
     case F:
-    case F2:
     case Fi:
-        return op == F || op == F2 || op == Fi;
+    case F2:
+        return op == F || op == Fi || op == F2;
 
     case R:
-    case R2:
     case Ri:
-        return (op == R || op == R2 || op == Ri) || (op == L || op == L2 || op == Li);
+    case R2:
+        return (op == R || op == Ri || op == R2) || (op == L || op == Li || op == L2);
 
     case D:
-    case D2:
     case Di:
-        return (op == D || op == D2 || op == Di) || (op == U || op == U2 || op == Ui);
+    case D2:
+        return (op == D || op == Di || op == D2) || (op == U || op == Ui || op == U2);
 
     case B:
-    case B2:
     case Bi:
-        return (op == B || op == B2 || op == Bi) || (op == F || op == F2 || op == Fi);
+    case B2:
+        return (op == B || op == Bi || op == B2) || (op == F || op == Fi || op == F2);
 
     default: // node_to_expand is the root
         return false;
@@ -49,7 +49,7 @@ static inline size_t get_sticker(const enum Face f, const size_t r, const size_t
     return FACE_SIZE * f + N * r + c;
 }
 
-static void swap(char *const state, const size_t a, const size_t b, const size_t c, const size_t d) {
+static void swap(char *state, const size_t a, const size_t b, const size_t c, const size_t d) {
     const char temp = state[a];
     state[a] = state[b];
     state[b] = state[c];
@@ -57,7 +57,7 @@ static void swap(char *const state, const size_t a, const size_t b, const size_t
     state[d] = temp;
 }
 
-static void rotate_face(char *const state, const enum Face face_to_rotate, const bool clockwise) {
+static void rotate_face(char *state, const enum Face face_to_rotate, const bool clockwise) {
     for (size_t i = 0; i < N - 1; i++) {
         const size_t a = get_sticker(face_to_rotate, 0, i);
         const size_t b = get_sticker(face_to_rotate, N - 1 - i, 0);
@@ -72,7 +72,7 @@ static void rotate_face(char *const state, const enum Face face_to_rotate, const
     }
 }
 
-void rotate_left_face(char *const state, const bool clockwise) {
+void rotate_left_face(char *state, const bool clockwise) {
     for (size_t i = 0; i < N; i++) {
         const size_t front_face_sticker = get_sticker(FRONT, i, 0);
         const size_t bottom_face_sticker = get_sticker(BOTTOM, i, 0);
@@ -89,7 +89,7 @@ void rotate_left_face(char *const state, const bool clockwise) {
     rotate_face(state, LEFT, clockwise);
 }
 
-void rotate_top_face(char *const state, const bool clockwise) {
+void rotate_top_face(char *state, const bool clockwise) {
     for (size_t i = 0; i < N; i++) {
         const size_t front_face_sticker = get_sticker(FRONT, 0, N - 1 - i);
         const size_t right_face_sticker = get_sticker(RIGHT, 0, N - 1 - i);
@@ -106,7 +106,7 @@ void rotate_top_face(char *const state, const bool clockwise) {
     rotate_face(state, TOP, clockwise);
 }
 
-void rotate_front_face(char *const state, const bool clockwise) {
+void rotate_front_face(char *state, const bool clockwise) {
     for (size_t i = 0; i < N; i++) {
         const size_t top_face_sticker = get_sticker(TOP, N - 1, i);
         const size_t left_face_sticker = get_sticker(LEFT, N - 1 - i, N - 1);
@@ -123,7 +123,7 @@ void rotate_front_face(char *const state, const bool clockwise) {
     rotate_face(state, FRONT, clockwise);
 }
 
-void rotate_right_face(char *const state, const bool clockwise) {
+void rotate_right_face(char *state, const bool clockwise) {
     for (size_t i = 0; i < N; i++) {
         const size_t front_face_sticker = get_sticker(FRONT, i, N - 1);
         const size_t bottom_face_sticker = get_sticker(BOTTOM, i, N - 1);
@@ -140,7 +140,7 @@ void rotate_right_face(char *const state, const bool clockwise) {
     rotate_face(state, RIGHT, clockwise);
 }
 
-void rotate_bottom_face(char *const state, const bool clockwise) {
+void rotate_bottom_face(char *state, const bool clockwise) {
     for (size_t i = 0; i < N; i++) {
         const size_t front_face_sticker = get_sticker(FRONT, N - 1, N - 1 - i);
         const size_t right_face_sticker = get_sticker(RIGHT, N - 1, N - 1 - i);
@@ -157,7 +157,7 @@ void rotate_bottom_face(char *const state, const bool clockwise) {
     rotate_face(state, BOTTOM, clockwise);
 }
 
-void rotate_back_face(char *const state, const bool clockwise) {
+void rotate_back_face(char *state, const bool clockwise) {
     for (size_t i = 0; i < N; i++) {
         const size_t top_face_sticker = get_sticker(TOP, 0, i);
         const size_t left_face_sticker = get_sticker(LEFT, N - 1 - i, 0);
@@ -174,37 +174,37 @@ void rotate_back_face(char *const state, const bool clockwise) {
     rotate_face(state, BACK, clockwise);
 }
 
-void rotate_L2(char *const state) {
+void rotate_L2(char *state) {
     for (size_t i = 0; i < 2; i++) {
         rotate_left_face(state, true);
     }
 }
 
-void rotate_U2(char *const state) {
+void rotate_U2(char *state) {
     for (size_t i = 0; i < 2; i++) {
         rotate_top_face(state, true);
     }
 }
 
-void rotate_F2(char *const state) {
+void rotate_F2(char *state) {
     for (size_t i = 0; i < 2; i++) {
         rotate_front_face(state, true);
     }
 }
 
-void rotate_R2(char *const state) {
+void rotate_R2(char *state) {
     for (size_t i = 0; i < 2; i++) {
         rotate_right_face(state, true);
     }
 }
 
-void rotate_D2(char *const state) {
+void rotate_D2(char *state) {
     for (size_t i = 0; i < 2; i++) {
         rotate_bottom_face(state, true);
     }
 }
 
-void rotate_B2(char *const state) {
+void rotate_B2(char *state) {
     for (size_t i = 0; i < 2; i++) {
         rotate_back_face(state, true);
     }

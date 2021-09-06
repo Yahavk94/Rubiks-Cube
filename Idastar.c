@@ -13,7 +13,7 @@ static struct Node *result = NULL;
 
 size_t heuristic_evaluation(const char *const state);
 
-static size_t search(struct Node *const current_node, const size_t path_cost) {
+static size_t search(struct Node *current_node, const size_t path_cost) {
     const size_t f = path_cost + heuristic_evaluation(current_node->state);
     if (f > bound) /* do not exceed the current bound */ {
         return f;
@@ -28,7 +28,7 @@ static size_t search(struct Node *const current_node, const size_t path_cost) {
     size_t min_f = UPPER_BOUND;
 
     for (size_t i = 0; i < NUM_OF_OPERATORS; i++) /* generate the next possible nodes */ {
-        struct Node *const new_node = expand_node(current_node, i);
+        struct Node *new_node = expand_node(current_node, i);
         if (new_node == NULL) {
             continue;
         }
@@ -67,7 +67,7 @@ static size_t search(struct Node *const current_node, const size_t path_cost) {
     return min_f;
 }
 
-struct Node *ida_star(struct Node *const initial_node) {
+struct Node *ida_star(struct Node *initial_node) {
     hcreate(HASH_TABLE_SIZE);
 
     const ENTRY item = {
@@ -92,7 +92,7 @@ struct Node *ida_star(struct Node *const initial_node) {
     hdestroy();
 
     if (result != NULL) {
-        struct Node *const goal_node = result;
+        struct Node *goal_node = result;
         result = NULL;
         return goal_node;
     }

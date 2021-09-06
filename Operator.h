@@ -8,7 +8,8 @@
 #define CUBE_OPERATORS_H
 
 enum Operator {
-    L, Li, U, Ui, F, Fi, R, Ri, D, Di, B, Bi,
+    L, U, F, R, D, B,
+    Li, Ui, Fi, Ri, Di, Bi,
     L2, U2, F2, R2, D2, B2,
     NONE
 };

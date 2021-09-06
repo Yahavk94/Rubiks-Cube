@@ -40,7 +40,7 @@ struct Node *init_from_file() {
         exit(EXIT_FAILURE);
     }
 
-    struct Node *const initial_node = malloc(sizeof(struct Node));
+    struct Node *initial_node = malloc(sizeof(struct Node));
     if (initial_node == NULL) {
         perror("INIT_FROM_FILE");
         fclose(fp);

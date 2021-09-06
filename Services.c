@@ -28,7 +28,7 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         return NULL;
     }
 
-    struct Node *const new_node = malloc(sizeof(struct Node));
+    struct Node *new_node = malloc(sizeof(struct Node));
     if (new_node == NULL) {
         perror("EXPAND_NODE");
         hdestroy();
@@ -44,46 +44,46 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         rotate_left_face(new_node->state, true);
         break;
 
-    case Li:
-        rotate_left_face(new_node->state, false);
-        break;
-
     case U:
         rotate_top_face(new_node->state, true);
-        break;
-
-    case Ui:
-        rotate_top_face(new_node->state, false);
         break;
 
     case F:
         rotate_front_face(new_node->state, true);
         break;
 
-    case Fi:
-        rotate_front_face(new_node->state, false);
-        break;
-
     case R:
         rotate_right_face(new_node->state, true);
-        break;
-
-    case Ri:
-        rotate_right_face(new_node->state, false);
         break;
 
     case D:
         rotate_bottom_face(new_node->state, true);
         break;
 
-    case Di:
-        rotate_bottom_face(new_node->state, false);
-        break;
-
     case B:
         rotate_back_face(new_node->state, true);
         break;
-
+    
+    case Li:
+        rotate_left_face(new_node->state, false);
+        break;
+    
+    case Ui:
+        rotate_top_face(new_node->state, false);
+        break;
+    
+    case Fi:
+        rotate_front_face(new_node->state, false);
+        break;
+    
+    case Ri:
+        rotate_right_face(new_node->state, false);
+        break;
+    
+    case Di:
+        rotate_bottom_face(new_node->state, false);
+        break;
+    
     case Bi:
         rotate_back_face(new_node->state, false);
         break;
