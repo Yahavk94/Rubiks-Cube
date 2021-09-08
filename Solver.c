@@ -29,7 +29,7 @@ static char *operator_to_str[] = {
 };
 
 struct Node *init_from_file();
-struct Node *ida_star(struct Node *initial_node);
+struct Node *ida_star(struct Node *root);
 
 /**
  * This function frees up the current branch and terminates the program.
@@ -50,16 +50,16 @@ void free_branch_and_terminate(struct Node *deepest_node) {
 void run() {
     clock_t start = clock();
 
-    struct Node *initial_node = init_from_file();
-    struct Node *result = ida_star(initial_node);
+    struct Node *root = init_from_file();
+    struct Node *result = ida_star(root);
     puts("SEARCH COMPLETED!");
 
-    const char *const output_file_name = "Output.txt";
+    const char *output_file_name = "Output.txt";
     FILE *fp = fopen(output_file_name, "w");
     if (fp == NULL) {
         perror(output_file_name);
         if (result == NULL) {
-            free(initial_node);
+            free(root);
             exit(EXIT_FAILURE);
         }
 
@@ -68,7 +68,7 @@ void run() {
 
     if (result == NULL) {
         fprintf(fp, "NO PATH\n");
-    } else if (result != initial_node) {
+    } else if (result != root) {
         char *sequence_of_operators[MAX_LENGTH];
         size_t i = 0;
 
@@ -77,7 +77,7 @@ void run() {
             struct Node *to_free = result;
             result = result->parent;
             free(to_free);
-        } while (result != initial_node);
+        } while (result != root);
 
         while (i > 1) {
             fprintf(fp, "%s-", sequence_of_operators[--i]);
@@ -86,7 +86,7 @@ void run() {
         fprintf(fp, "%s\n", sequence_of_operators[0]);
     }
 
-    free(initial_node);
+    free(root);
 
     fprintf(fp, "%.5f seconds", ((double)(clock() - start)) / CLOCKS_PER_SEC);
     fclose(fp);

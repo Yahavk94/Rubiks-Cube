@@ -67,20 +67,20 @@ static size_t search(struct Node *current_node, const size_t path_cost) {
     return min_f;
 }
 
-struct Node *ida_star(struct Node *initial_node) {
+struct Node *ida_star(struct Node *root) {
     hcreate(HASH_TABLE_SIZE);
 
     const ENTRY item = {
-        initial_node->state, initial_node
+        root->state, root
     };
 
     hsearch(item, ENTER);
 
     // initialize the bound
-    bound = heuristic_evaluation(initial_node->state);
+    bound = heuristic_evaluation(root->state);
 
     while (true) {
-        const size_t t = search(initial_node, 0);
+        const size_t t = search(root, 0);
         if (t == FOUND || t == UPPER_BOUND) /* end of search */ {
             break;
         }

@@ -5,6 +5,7 @@
 #include "Operator.h"
 #include "Node.h"
 
+#define BUFFER_SIZE 1024
 #define ERROR 404
 
 /**
@@ -30,42 +31,39 @@ static size_t char_to_index(const char ch) {
 }
 
 /**
- * This function initializes and returns the initial node.
+ * This function initializes and returns the root node of the search graph.
  */
 struct Node *init_from_file() {
-    const char *const input_file_name = "Input.txt";
+    const char *input_file_name = "Input.txt";
     FILE *fp = fopen(input_file_name, "r");
     if (fp == NULL) {
         perror(input_file_name);
         exit(EXIT_FAILURE);
     }
 
-    struct Node *initial_node = malloc(sizeof(struct Node));
-    if (initial_node == NULL) {
+    struct Node *root = malloc(sizeof(struct Node));
+    if (root == NULL) {
         perror("INIT_FROM_FILE");
         fclose(fp);
         exit(EXIT_FAILURE);
     }
 
-    initial_node->operator = NONE;
-    initial_node->parent = NULL;
+    root->operator = NONE;
+    root->parent = NULL;
 
-    char input[CUBE_SIZE];
+    char buffer[BUFFER_SIZE];
     size_t input_verifier[NUM_OF_FACES] = {0};
 
-    const char *const delim = "[,]\n";
+    const char *delim = "[,]\n";
 
-    for (size_t face = 0; face < CUBE_SIZE; face += FACE_SIZE) /* initialize the initial state */ {
-        if (fgets(input, sizeof(input), fp) == NULL) {
-            break;
-        }
+    size_t i = 0;
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        const char *sticker = strtok(buffer, delim);
 
-        const char *sticker = strtok(input, delim);
-
-        for (size_t i = 0; i < FACE_SIZE; i++) {
+        while (sticker != NULL) {
             const size_t index = char_to_index(sticker[0]);
             if (index != ERROR) {
-                initial_node->state[face + i] = sticker[0];
+                root->state[i++] = sticker[0];
                 input_verifier[index]++;
             }
 
@@ -78,10 +76,10 @@ struct Node *init_from_file() {
     for (size_t i = 0; i < NUM_OF_FACES; i++) /* verify the input */ {
         if (input_verifier[i] != FACE_SIZE) {
             puts("INVALID INPUT");
-            free(initial_node);
+            free(root);
             exit(EXIT_FAILURE);
         }
     }
 
-    return initial_node;
+    return root;
 }

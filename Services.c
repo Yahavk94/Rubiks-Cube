@@ -35,11 +35,14 @@ struct Node *expand_node(struct Node *node_to_expand, const enum Operator op) {
         free_branch_and_terminate(node_to_expand);
     }
 
+    // new_node is an expansion of node_to_expand by op
     new_node->operator = op;
     new_node->parent = node_to_expand;
+
+    // a deep copy
     memcpy(new_node->state, node_to_expand->state, sizeof(new_node->state));
 
-    switch (op) /* update the state of the generated node */ {
+    switch (op) /* update the state of the new node */ {
     case L:
         rotate_left_face(new_node->state, true);
         break;
